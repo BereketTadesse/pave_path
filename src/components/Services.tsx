@@ -1,6 +1,6 @@
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
-import { PenTool, Accessibility, Car, Droplets, ClipboardList, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { PenTool, Accessibility, Car, Droplets, ClipboardList, CheckCircle2 } from 'lucide-react';
 
 const services = [
   {
@@ -98,13 +98,6 @@ export const Services = () => {
     target: containerRef,
     offset: ['start start', 'end end']
   });
-
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   // Animation variants for staggered reveal
   const containerVariants = {
@@ -286,7 +279,7 @@ export const Services = () => {
                     delay: index * 0.1,
                     ease: [0.25, 0.1, 0.25, 1],
                   }}
-                  className="glass-card-hover relative overflow-hidden rounded-xl sm:rounded-2xl w-full max-w-7xl mx-auto group min-h-[400px] sm:min-h-[500px] lg:min-h-[600px] flex flex-col dark:border-border/70"
+                  className={`glass-card-hover relative overflow-hidden rounded-xl sm:rounded-2xl w-full max-w-7xl mx-auto group flex flex-col dark:border-border/70 ${service.hasTwoSections ? 'min-h-[500px] sm:min-h-[550px] lg:min-h-[600px]' : 'min-h-[400px] sm:min-h-[500px] lg:min-h-[600px]'}`}
                 >
                   {/* Background Gradient Effect */}
                   <motion.div 
@@ -298,7 +291,7 @@ export const Services = () => {
                   <div className="absolute inset-0 bg-gradient-to-br from-secondary/5 via-secondary/2 to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   
                   {/* Content */}
-                  <div className="relative p-4 sm:p-6 lg:p-8 flex-1 flex flex-col">
+                  <div className={`relative ${service.hasTwoSections ? 'p-3 sm:p-4 md:p-6 lg:p-8' : 'p-4 sm:p-6 lg:p-8'} flex-1 flex flex-col`}>
                     <div className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-6 sm:gap-8 lg:gap-12 items-start`}>
                       {/* Left/Right: Icon & Badge Section */}
                       <div className={`flex-shrink-0 ${isEven ? 'lg:order-1' : 'lg:order-2'}`}>
@@ -392,7 +385,7 @@ export const Services = () => {
                         
                         {/* Description */}
                         <motion.p 
-                          className="text-muted-foreground text-sm sm:text-base lg:text-lg leading-relaxed mb-4 sm:mb-6"
+                          className={`text-muted-foreground ${service.hasTwoSections ? 'text-xs sm:text-sm md:text-base lg:text-lg mb-2 sm:mb-3 md:mb-4' : 'text-sm sm:text-base lg:text-lg mb-4 sm:mb-6'} leading-relaxed`}
                           initial={{ opacity: 0 }}
                           animate={{
                             opacity: 1,
@@ -408,7 +401,7 @@ export const Services = () => {
                         {/* Bullet Points - Special layout for services with two sections */}
                         {service.hasTwoSections ? (
                           <motion.div 
-                            className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6"
+                            className="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-4 md:gap-6 mb-3 sm:mb-4 md:mb-6"
                             initial={{ opacity: 0 }}
                             animate={{
                               opacity: 1,
@@ -420,7 +413,7 @@ export const Services = () => {
                           >
                             {/* First Section */}
                             <motion.div 
-                              className="p-3 sm:p-4 rounded-lg bg-primary/5 dark:bg-primary/10 border border-primary/10 dark:border-primary/20"
+                              className="p-2.5 sm:p-3 md:p-4 rounded-lg bg-primary/5 dark:bg-primary/10 border border-primary/10 dark:border-primary/20"
                               initial={{ opacity: 0, x: -20 }}
                               animate={{
                                 opacity: 1,
@@ -431,14 +424,14 @@ export const Services = () => {
                                 delay: index * 0.1 + 0.6,
                               }}
                             >
-                              <p className="text-xs sm:text-sm font-semibold text-foreground mb-2 sm:mb-3">
+                              <p className="text-[11px] sm:text-xs md:text-sm font-semibold text-foreground mb-1.5 sm:mb-2 md:mb-3 leading-tight">
                                 We draft MUTCD-compliant traffic control plans for:
                               </p>
-                              <ul className="space-y-1.5 sm:space-y-2">
+                              <ul className="space-y-1 sm:space-y-1.5 md:space-y-2">
                                 {service.bullets.map((bullet, bulletIndex) => (
                                   <motion.li
                                     key={bulletIndex}
-                                    className="flex items-start gap-2 text-xs sm:text-sm lg:text-base text-foreground"
+                                    className="flex items-start gap-1.5 sm:gap-2 text-[11px] sm:text-xs md:text-sm lg:text-base text-foreground"
                                     initial={{ opacity: 0, x: -10 }}
                                     animate={{
                                       opacity: 1,
@@ -449,8 +442,8 @@ export const Services = () => {
                                       delay: index * 0.1 + 0.7 + bulletIndex * 0.05,
                                     }}
                                   >
-                                    <span className="text-secondary mt-1 sm:mt-1.5 flex-shrink-0">●</span>
-                                    <span className="leading-relaxed">{bullet}</span>
+                                    <span className="text-secondary mt-0.5 sm:mt-1 md:mt-1.5 flex-shrink-0 text-[10px] sm:text-xs">●</span>
+                                    <span className="leading-snug sm:leading-relaxed">{bullet}</span>
                                   </motion.li>
                                 ))}
                               </ul>
@@ -458,7 +451,7 @@ export const Services = () => {
 
                             {/* Second Section */}
                             <motion.div 
-                              className="p-3 sm:p-4 rounded-lg bg-accent/5 dark:bg-accent/10 border border-accent/10 dark:border-accent/20"
+                              className="p-2.5 sm:p-3 md:p-4 rounded-lg bg-accent/5 dark:bg-accent/10 border border-accent/10 dark:border-accent/20"
                               initial={{ opacity: 0, x: 20 }}
                               animate={{
                                 opacity: 1,
@@ -469,14 +462,14 @@ export const Services = () => {
                                 delay: index * 0.1 + 0.6,
                               }}
                             >
-                              <p className="text-xs sm:text-sm font-semibold text-foreground mb-2 sm:mb-3">
+                              <p className="text-[11px] sm:text-xs md:text-sm font-semibold text-foreground mb-1.5 sm:mb-2 md:mb-3 leading-tight">
                                 {service.secondSectionTitle}
                               </p>
-                              <ul className="space-y-1.5 sm:space-y-2">
+                              <ul className="space-y-1 sm:space-y-1.5 md:space-y-2">
                                 {service.secondSectionBullets?.map((bullet, bulletIndex) => (
                                   <motion.li
                                     key={bulletIndex}
-                                    className="flex items-start gap-2 text-xs sm:text-sm lg:text-base text-foreground"
+                                    className="flex items-start gap-1.5 sm:gap-2 text-[11px] sm:text-xs md:text-sm lg:text-base text-foreground"
                                     initial={{ opacity: 0, x: 10 }}
                                     animate={{
                                       opacity: 1,
@@ -487,8 +480,8 @@ export const Services = () => {
                                       delay: index * 0.1 + 0.7 + bulletIndex * 0.05,
                                     }}
                                   >
-                                    <span className="text-secondary mt-1 sm:mt-1.5 flex-shrink-0">●</span>
-                                    <span className="leading-relaxed">{bullet}</span>
+                                    <span className="text-secondary mt-0.5 sm:mt-1 md:mt-1.5 flex-shrink-0 text-[10px] sm:text-xs">●</span>
+                                    <span className="leading-snug sm:leading-relaxed">{bullet}</span>
                                   </motion.li>
                                 ))}
                               </ul>
@@ -529,7 +522,7 @@ export const Services = () => {
 
                         {/* Best For Section */}
                         <motion.div 
-                          className="mt-auto mb-4 sm:mb-6 p-3 sm:p-4 rounded-lg bg-primary/5 dark:bg-primary/10 border border-primary/10 dark:border-primary/20"
+                          className={`mt-auto ${service.hasTwoSections ? 'mb-2 sm:mb-3 md:mb-6 p-2 sm:p-2.5 md:p-4' : 'mb-4 sm:mb-6 p-3 sm:p-4'} rounded-lg bg-primary/5 dark:bg-primary/10 border border-primary/10 dark:border-primary/20`}
                           initial={{ opacity: 0, y: 20 }}
                           animate={{
                             opacity: 1,
@@ -540,28 +533,10 @@ export const Services = () => {
                             delay: index * 0.1 + 0.8,
                           }}
                         >
-                          <p className="text-xs sm:text-sm text-foreground leading-relaxed">
+                          <p className={`${service.hasTwoSections ? 'text-[11px] sm:text-xs md:text-sm' : 'text-xs sm:text-sm'} text-foreground leading-snug sm:leading-relaxed`}>
                             {service.bestFor}
                           </p>
                         </motion.div>
-
-                        {/* CTA Button */}
-                        <motion.button
-                          onClick={() => scrollToSection('#contact')}
-                          className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-primary hover:text-secondary transition-colors group/link w-fit touch-manipulation min-h-[44px] py-2"
-                          initial={{ opacity: 0, scale: 0.9 }}
-                          animate={{
-                            opacity: 1,
-                            scale: 1,
-                          }}
-                          transition={{
-                            duration: 0.4,
-                            delay: index * 0.1 + 0.9,
-                          }}
-                        >
-                          <span>Learn more</span>
-                          <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover/link:translate-x-1 transition-transform flex-shrink-0" />
-                        </motion.button>
                       </motion.div>
                     </div>
                   </div>

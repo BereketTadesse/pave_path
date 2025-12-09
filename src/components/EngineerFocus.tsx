@@ -43,7 +43,7 @@ export const EngineerFocus = () => {
     <section className="section-spacing relative bg-secondary" ref={ref}>
       <div className="section-container">
         {/* Staircase Layout Container */}
-        <div className="relative min-h-[240px] lg:min-h-[260px]">
+        <div className="relative min-h-[240px] sm:min-h-[200px] lg:min-h-[200px]">
           {/* Step 1: First text - Top Left (aligned with cards above) */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -61,7 +61,7 @@ export const EngineerFocus = () => {
               initial={{ opacity: 0, x: 30 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="absolute top-24 lg:top-28 left-1/2 lg:left-[45%] max-w-xs"
+              className="absolute top-20 sm:top-16 lg:top-20 left-0 sm:left-1/2 lg:left-[45%] max-w-xs sm:max-w-xs"
             >
               <p className="text-base lg:text-lg text-secondary-foreground/90 leading-relaxed">
                 We take care of the plan production.
@@ -73,7 +73,7 @@ export const EngineerFocus = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="absolute top-32 lg:top-36 right-0"
+              className="absolute top-36 sm:top-28 lg:top-28 left-0 sm:left-auto sm:right-0"
             >
               <button
                 onClick={() => scrollToSection('#contact')}
