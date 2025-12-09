@@ -1,15 +1,41 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { ArrowRight } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export const EngineerFocus = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    // Check if we're on home page
+    const isOnHomePage = location.pathname === '/';
+    
+    if (!isOnHomePage) {
+      // Navigate to home page first, then scroll to section
+      navigate('/');
+      setTimeout(() => {
+        const element = document.querySelector(href);
+        if (element) {
+          const yOffset = -80; // Offset for fixed navbar
+          const rect = element.getBoundingClientRect();
+          const absoluteElementTop = rect.top + window.pageYOffset;
+          const offsetPosition = absoluteElementTop + yOffset;
+          window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+        }
+      }, 300);
+    } else {
+      // Already on home page, just scroll
+      const element = document.querySelector(href);
+      if (element) {
+        const yOffset = -80; // Offset for fixed navbar
+        const rect = element.getBoundingClientRect();
+        const absoluteElementTop = rect.top + window.pageYOffset;
+        const offsetPosition = absoluteElementTop + yOffset;
+        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+      }
     }
   };
 
@@ -50,7 +76,7 @@ export const EngineerFocus = () => {
               className="absolute top-32 lg:top-36 right-0"
             >
               <button
-                onClick={() => scrollToSection('#cta')}
+                onClick={() => scrollToSection('#contact')}
                 className="bg-secondary-foreground text-secondary px-6 py-3 rounded-[6px] font-semibold text-base hover:bg-secondary-foreground/90 transition-colors shadow-lg group"
               >
                 <span className="flex items-center gap-2">
