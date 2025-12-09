@@ -7,9 +7,9 @@ import { Link } from 'react-router-dom';
 const blogPosts = [
   {
     id: 1,
-    slug: 'best-practices-civil-3d-drafting',
-    title: 'Best Practices for Civil 3D Drafting Standards',
-    excerpt: 'Learn how to establish consistent CAD standards that improve collaboration and reduce revision cycles in your civil engineering projects.',
+    slug: 'how-overflow-drafting-helps-civil-firms-meet-deadlines',
+    title: 'How Overflow Drafting Helps Civil Engineering Firms Meet Tight Deadlines',
+    excerpt: 'Discover how overflow drafting support helps civil engineering firms stay ahead of deadlines, reduce backlog, and maintain production quality during peak workload cycles.',
     author: 'PavePath Team',
     date: '2024-01-15',
     readTime: '5 min read',
@@ -18,9 +18,9 @@ const blogPosts = [
   },
   {
     id: 2,
-    slug: 'ada-compliance-curb-ramps',
-    title: 'ADA Compliance: Common Mistakes in Curb Ramp Design',
-    excerpt: 'Avoid costly revisions by understanding the most frequent ADA compliance issues in curb ramp drafting and how to prevent them.',
+    slug: 'ada-curb-ramp-drafting-best-practices',
+    title: 'ADA Curb Ramp Drafting: Best Practices for Compliance and Accuracy',
+    excerpt: 'Learn best practices for ADA-compliant curb ramp drafting, including slope geometry, sheet standards, PROWAG rules, and drafting techniques for accurate ramp plan sets.',
     author: 'PavePath Team',
     date: '2024-01-10',
     readTime: '7 min read',
@@ -29,9 +29,9 @@ const blogPosts = [
   },
   {
     id: 3,
-    slug: 'traffic-control-plan-essentials',
-    title: 'Traffic Control Plans: Essential Elements for Permit Approval',
-    excerpt: 'Discover the key components that make traffic control plans approval-ready and reduce back-and-forth with permitting agencies.',
+    slug: 'how-to-prepare-permit-ready-traffic-control-plan-set',
+    title: 'How to Prepare a Permit-Ready Traffic Control Plan Set',
+    excerpt: 'Learn the essential steps and drafting standards needed to prepare a MUTCD-compliant traffic control plan (TCP) ready for agency permitting.',
     author: 'PavePath Team',
     date: '2024-01-05',
     readTime: '6 min read',
