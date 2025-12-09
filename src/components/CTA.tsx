@@ -66,38 +66,52 @@ export const CTA = () => {
   };
 
   return (
-    <section id="contact" className="section-spacing relative bg-primary dark:bg-background w-full" ref={ref}>
-      <div className="section-container relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <span className="text-secondary font-medium text-sm uppercase tracking-wider">Get Started</span>
-          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mt-4 mb-4 sm:mb-6 text-primary-foreground dark:text-foreground">
-            Let's Talk About Your Drafting Needs
-          </h2>
-          <p className="text-primary-foreground/90 dark:text-foreground/90 text-base sm:text-lg max-w-2xl mx-auto">
-            Whether you're dealing with a temporary spike in work or looking for a reliable long-term drafting 
-            partner, we'd love to learn more about your workload and standards.
-          </p>
-        </motion.div>
+    <section id="contact" className="relative w-full" ref={ref}>
+      {/* Green Background Section with White Lines */}
+      <div className="relative bg-secondary dark:bg-background">
+        {/* Top white line */}
+        <div className="h-px bg-white/20"></div>
+        
+        <div className="section-container relative z-10 py-12 sm:py-16 lg:py-20">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="text-center"
+          >
+            <span className="text-secondary-foreground dark:text-secondary font-medium text-sm uppercase tracking-wider">Get Started</span>
+            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mt-4 mb-4 sm:mb-6 text-secondary-foreground dark:text-foreground">
+              Let's Talk About Your Drafting Needs
+            </h2>
+            <p className="text-secondary-foreground/90 dark:text-foreground/90 text-base sm:text-lg max-w-2xl mx-auto">
+              Whether you're dealing with a temporary spike in work or looking for a reliable long-term drafting 
+              partner, we'd love to learn more about your workload and standards.
+            </p>
+          </motion.div>
+        </div>
+        
+        {/* Bottom white line */}
+        <div className="h-px bg-white/20"></div>
+      </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="max-w-2xl mx-auto"
-        >
+      {/* White Background Section for Forms */}
+      <div className="bg-white dark:bg-background section-spacing">
+        <div className="section-container relative z-10">
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="max-w-2xl mx-auto"
+          >
           {/* Tab buttons */}
-              <div className="flex rounded-xl bg-primary-foreground/10 dark:bg-card/50 border border-primary-foreground/20 dark:border-border/50 p-1 mb-6 sm:mb-8">
+              <div className="flex rounded-xl bg-muted/50 dark:bg-card/50 border border-border/50 dark:border-border/50 p-1 mb-6 sm:mb-8">
             <button
               onClick={() => setActiveTab('call')}
                   className={`flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg font-medium transition-all touch-manipulation min-h-[44px] text-sm sm:text-base ${
                     activeTab === 'call' 
-                      ? 'bg-primary-foreground dark:bg-card text-primary dark:text-foreground shadow-lg border border-primary-foreground/20 dark:border-border/50' 
-                      : 'text-primary-foreground/70 dark:text-foreground/70 hover:text-primary-foreground dark:hover:text-foreground'
+                      ? 'bg-white dark:bg-card text-primary dark:text-foreground shadow-lg border border-border/50 dark:border-border/50' 
+                      : 'text-foreground/70 dark:text-foreground/70 hover:text-foreground dark:hover:text-foreground'
                   }`}
             >
               <Phone className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
@@ -108,8 +122,8 @@ export const CTA = () => {
               onClick={() => setActiveTab('redline')}
                   className={`flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg font-medium transition-all touch-manipulation min-h-[44px] text-sm sm:text-base ${
                     activeTab === 'redline' 
-                      ? 'bg-primary-foreground dark:bg-card text-primary dark:text-foreground shadow-lg border border-primary-foreground/20 dark:border-border/50' 
-                      : 'text-primary-foreground/70 dark:text-foreground/70 hover:text-primary-foreground dark:hover:text-foreground'
+                      ? 'bg-white dark:bg-card text-primary dark:text-foreground shadow-lg border border-border/50 dark:border-border/50' 
+                      : 'text-foreground/70 dark:text-foreground/70 hover:text-foreground dark:hover:text-foreground'
                   }`}
             >
               <Send className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
@@ -119,7 +133,7 @@ export const CTA = () => {
           </div>
 
           {/* Forms */}
-          <div className="bg-primary-foreground dark:bg-card border border-primary-foreground/20 dark:border-border/50 rounded-xl sm:rounded-2xl p-5 sm:p-6 lg:p-8 shadow-lg">
+          <div className="bg-white dark:bg-card border border-border/50 dark:border-border/50 rounded-xl sm:rounded-2xl p-5 sm:p-6 lg:p-8 shadow-lg">
             {activeTab === 'call' ? (
               <form onSubmit={handleCallSubmit} className="space-y-5">
                 <div>
@@ -272,7 +286,7 @@ export const CTA = () => {
                 <p className="text-sm text-muted-foreground italic">
                   Want to try us first? Ask for a free pilot redline update in your message.
                 </p>
-                <button type="submit" className="w-full group bg-secondary text-secondary-foreground hover:bg-secondary/90 active:scale-95 px-6 py-3.5 sm:py-3 rounded-[6px] font-semibold transition-all touch-manipulation min-h-[48px] text-base">
+                <button type="submit" className="w-full group bg-primary text-primary-foreground hover:bg-primary/90 active:scale-95 px-6 py-3.5 sm:py-3 rounded-[6px] font-semibold transition-all touch-manipulation min-h-[48px] text-base">
                   <span className="flex items-center justify-center gap-2">
                     Schedule Call
                     <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform flex-shrink-0" />
@@ -327,7 +341,7 @@ export const CTA = () => {
                     placeholder="Describe the redlines and attach files after submission..."
                   />
                 </div>
-                <button type="submit" className="w-full group bg-secondary text-secondary-foreground hover:bg-secondary/90 active:scale-95 px-6 py-3.5 sm:py-3 rounded-[6px] font-semibold transition-all touch-manipulation min-h-[48px] text-base">
+                <button type="submit" className="w-full group bg-primary text-primary-foreground hover:bg-primary/90 active:scale-95 px-6 py-3.5 sm:py-3 rounded-[6px] font-semibold transition-all touch-manipulation min-h-[48px] text-base">
                   <span className="flex items-center justify-center gap-2">
                     Submit for Quote
                     <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform flex-shrink-0" />
@@ -336,7 +350,8 @@ export const CTA = () => {
               </form>
             )}
           </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

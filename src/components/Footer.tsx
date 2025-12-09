@@ -1,4 +1,4 @@
-import { Linkedin, Twitter, Mail, MapPin, Phone } from 'lucide-react';
+import { Linkedin, Twitter, Mail, Phone, MessageCircle, Send } from 'lucide-react';
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -24,11 +24,32 @@ export const Footer = () => {
               From urgent redlines to full project support.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="w-9 h-9 rounded-lg bg-foreground/10 dark:bg-card/30 flex items-center justify-center hover:bg-secondary transition-colors text-foreground dark:text-foreground hover:text-secondary-foreground dark:hover:text-foreground">
+              <a 
+                href="https://www.linkedin.com/company/pavepathdesign/posts/?feedView=all" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-lg bg-foreground/10 dark:bg-card/30 flex items-center justify-center hover:bg-secondary transition-colors text-foreground dark:text-foreground hover:text-secondary-foreground dark:hover:text-foreground"
+                aria-label="LinkedIn"
+              >
                 <Linkedin className="w-4 h-4" />
               </a>
-              <a href="#" className="w-9 h-9 rounded-lg bg-foreground/10 dark:bg-card/30 flex items-center justify-center hover:bg-secondary transition-colors text-foreground dark:text-foreground hover:text-secondary-foreground dark:hover:text-foreground">
+              <a 
+                href="https://x.com/PavePathdesign" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-lg bg-foreground/10 dark:bg-card/30 flex items-center justify-center hover:bg-secondary transition-colors text-foreground dark:text-foreground hover:text-secondary-foreground dark:hover:text-foreground"
+                aria-label="X (Twitter)"
+              >
                 <Twitter className="w-4 h-4" />
+              </a>
+              <a 
+                href="https://t.me/PavePathdesign" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-lg bg-foreground/10 dark:bg-card/30 flex items-center justify-center hover:bg-secondary transition-colors text-foreground dark:text-foreground hover:text-secondary-foreground dark:hover:text-foreground"
+                aria-label="Telegram"
+              >
+                <Send className="w-4 h-4" />
               </a>
             </div>
           </div>
@@ -71,16 +92,25 @@ export const Footer = () => {
             <h4 className="font-display font-semibold mb-4 text-foreground dark:text-foreground">Contact</h4>
             <ul className="space-y-3">
               <li className="flex items-center gap-3 text-sm text-foreground/80 dark:text-foreground/80">
-                <Mail className="w-4 h-4 text-secondary" />
-                hello@pavepath.design
+                <Mail className="w-4 h-4 text-secondary flex-shrink-0" />
+                <a href="mailto:info@pavepathdesign.com" className="hover:text-secondary transition-colors">
+                  info@pavepathdesign.com
+                </a>
               </li>
               <li className="flex items-center gap-3 text-sm text-foreground/80 dark:text-foreground/80">
-                <Phone className="w-4 h-4 text-secondary" />
-                (555) 123-4567
-              </li>
-              <li className="flex items-start gap-3 text-sm text-foreground/80 dark:text-foreground/80">
-                <MapPin className="w-4 h-4 text-secondary flex-shrink-0 mt-0.5" />
-                <span>Remote-First Team<br />Serving Clients Worldwide</span>
+                <Phone className="w-4 h-4 text-secondary flex-shrink-0" />
+                <a href="tel:+16503092685" className="hover:text-secondary transition-colors">
+                  +1 650 309 2685
+                </a>
+                <a 
+                  href="https://wa.me/16503092685" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="ml-2 hover:scale-110 transition-transform"
+                  aria-label="WhatsApp"
+                >
+                  <MessageCircle className="w-4 h-4 text-secondary" />
+                </a>
               </li>
             </ul>
           </div>

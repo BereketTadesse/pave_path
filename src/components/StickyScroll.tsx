@@ -144,9 +144,10 @@ export const StickyScroll = ({ content, contentClassName }: StickyScrollProps) =
 
   return (
     <div ref={ref} className="relative w-full">
-      <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 px-0 sm:px-4">
+      {/* Desktop: Sticky scroll layout */}
+      <div className="hidden lg:grid lg:grid-cols-2 gap-10 px-4">
         {/* Left side - Text content */}
-        <div className="py-8 sm:py-12 lg:py-20">
+        <div className="py-20">
           {content.map((item, index) => (
             <ScrollTextItem
               key={item.title}
@@ -159,8 +160,8 @@ export const StickyScroll = ({ content, contentClassName }: StickyScrollProps) =
         </div>
 
         {/* Right side - Sticky content */}
-        <div className="lg:sticky lg:top-0 lg:h-screen lg:flex lg:items-center order-first lg:order-last">
-          <div className={cn('w-full h-[300px] sm:h-[400px] lg:h-[600px] rounded-lg relative', contentClassName)}>
+        <div className="sticky top-0 h-screen flex items-center">
+          <div className={cn('w-full h-[600px] rounded-lg relative', contentClassName)}>
             {content.map((item, index) => (
               <ScrollImageItem
                 key={`content-${index}`}
@@ -172,6 +173,68 @@ export const StickyScroll = ({ content, contentClassName }: StickyScrollProps) =
             ))}
           </div>
         </div>
+      </div>
+
+      {/* Mobile: Simple card layout */}
+      <div className="lg:hidden space-y-8">
+        {content.map((item, index) => {
+          const Icon = item.icon;
+          return (
+            <motion.div
+              key={item.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="bg-card border border-border/50 dark:border-border/70 rounded-xl sm:rounded-2xl overflow-hidden shadow-lg"
+            >
+              {/* Image */}
+              <div className={cn('w-full h-[250px] sm:h-[300px] relative overflow-hidden', contentClassName)}>
+                {item.content}
+              </div>
+              
+              {/* Content */}
+              <div className="p-6 sm:p-8">
+                <div className="flex items-center gap-3 sm:gap-4 mb-4">
+                  {item.number && (
+                    <span className="font-display text-2xl sm:text-3xl font-bold text-primary/20">
+                      {item.number}
+                    </span>
+                  )}
+                  {Icon && (
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-secondary/10 flex items-center justify-center border border-secondary/20 flex-shrink-0">
+                      <Icon className="w-6 h-6 sm:w-7 sm:h-7 text-secondary" strokeWidth={1.5} />
+                    </div>
+                  )}
+                  <h2 className="font-display text-xl sm:text-2xl font-semibold text-foreground">
+                    {item.title}
+                  </h2>
+                </div>
+                
+                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-4">
+                  {item.description}
+                </p>
+                
+                {item.features && item.features.length > 0 && (
+                  <ul className="space-y-2 mb-4">
+                    {item.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-xs sm:text-sm text-muted-foreground">
+                        <span className="text-secondary mt-1.5 flex-shrink-0">●</span>
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                
+                {item.note && (
+                  <p className="text-xs sm:text-sm text-muted-foreground italic mt-4">
+                    {item.note}
+                  </p>
+                )}
+              </div>
+            </motion.div>
+          );
+        })}
       </div>
     </div>
   );
