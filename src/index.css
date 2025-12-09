@@ -152,6 +152,18 @@
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  
+  /* Touch optimization */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  button, a {
+    touch-action: manipulation;
   }
 
   h1, h2 {
@@ -230,18 +242,46 @@
   }
 
   .section-container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply max-w-7xl mx-auto px-4 sm:px-5 md:px-6 lg:px-8;
   }
 
-  /* Section Spacing - Engineered spacing (72-96px) */
+  /* Section Spacing - Engineered spacing (72-96px) - Responsive */
   .section-spacing {
-    padding-top: var(--section-padding-y);
-    padding-bottom: var(--section-padding-y);
+    padding-top: 3rem; /* 48px on mobile */
+    padding-bottom: 3rem;
+  }
+  
+  @media (min-width: 640px) {
+    .section-spacing {
+      padding-top: 3.5rem; /* 56px on sm */
+      padding-bottom: 3.5rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .section-spacing {
+      padding-top: var(--section-padding-y); /* 72px on lg+ */
+      padding-bottom: var(--section-padding-y);
+    }
   }
   
   .section-spacing-lg {
-    padding-top: var(--section-padding-y-lg);
-    padding-bottom: var(--section-padding-y-lg);
+    padding-top: 4rem; /* 64px on mobile */
+    padding-bottom: 4rem;
+  }
+  
+  @media (min-width: 640px) {
+    .section-spacing-lg {
+      padding-top: 4.5rem; /* 72px on sm */
+      padding-bottom: 4.5rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .section-spacing-lg {
+      padding-top: var(--section-padding-y-lg); /* 96px on lg+ */
+      padding-bottom: var(--section-padding-y-lg);
+    }
   }
   
   /* Internal Block Spacing (32-48px) */
@@ -300,3 +340,4 @@
     text-wrap: balance;
   }
 }
+

@@ -75,10 +75,10 @@ export const CTA = () => {
           className="text-center mb-12"
         >
           <span className="text-secondary font-medium text-sm uppercase tracking-wider">Get Started</span>
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold mt-4 mb-6 text-primary-foreground dark:text-foreground">
+          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mt-4 mb-4 sm:mb-6 text-primary-foreground dark:text-foreground">
             Let's Talk About Your Drafting Needs
           </h2>
-          <p className="text-primary-foreground/90 dark:text-foreground/90 text-lg max-w-2xl mx-auto">
+          <p className="text-primary-foreground/90 dark:text-foreground/90 text-base sm:text-lg max-w-2xl mx-auto">
             Whether you're dealing with a temporary spike in work or looking for a reliable long-term drafting 
             partner, we'd love to learn more about your workload and standards.
           </p>
@@ -91,33 +91,35 @@ export const CTA = () => {
           className="max-w-2xl mx-auto"
         >
           {/* Tab buttons */}
-              <div className="flex rounded-xl bg-primary-foreground/10 dark:bg-card/50 border border-primary-foreground/20 dark:border-border/50 p-1 mb-8">
+              <div className="flex rounded-xl bg-primary-foreground/10 dark:bg-card/50 border border-primary-foreground/20 dark:border-border/50 p-1 mb-6 sm:mb-8">
             <button
               onClick={() => setActiveTab('call')}
-                  className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg font-medium transition-all ${
+                  className={`flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg font-medium transition-all touch-manipulation min-h-[44px] text-sm sm:text-base ${
                     activeTab === 'call' 
                       ? 'bg-primary-foreground dark:bg-card text-primary dark:text-foreground shadow-lg border border-primary-foreground/20 dark:border-border/50' 
                       : 'text-primary-foreground/70 dark:text-foreground/70 hover:text-primary-foreground dark:hover:text-foreground'
                   }`}
             >
-              <Phone className="w-4 h-4" />
-              Book a Call
+              <Phone className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+              <span className="hidden xs:inline">Book a Call</span>
+              <span className="xs:hidden">Call</span>
             </button>
             <button
               onClick={() => setActiveTab('redline')}
-                  className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg font-medium transition-all ${
+                  className={`flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg font-medium transition-all touch-manipulation min-h-[44px] text-sm sm:text-base ${
                     activeTab === 'redline' 
                       ? 'bg-primary-foreground dark:bg-card text-primary dark:text-foreground shadow-lg border border-primary-foreground/20 dark:border-border/50' 
                       : 'text-primary-foreground/70 dark:text-foreground/70 hover:text-primary-foreground dark:hover:text-foreground'
                   }`}
             >
-              <Send className="w-4 h-4" />
-              Submit Redline Task
+              <Send className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+              <span className="hidden xs:inline">Submit Redline Task</span>
+              <span className="xs:hidden">Redline</span>
             </button>
           </div>
 
           {/* Forms */}
-          <div className="bg-primary-foreground dark:bg-card border border-primary-foreground/20 dark:border-border/50 rounded-2xl p-8 shadow-lg">
+          <div className="bg-primary-foreground dark:bg-card border border-primary-foreground/20 dark:border-border/50 rounded-xl sm:rounded-2xl p-5 sm:p-6 lg:p-8 shadow-lg">
             {activeTab === 'call' ? (
               <form onSubmit={handleCallSubmit} className="space-y-5">
                 <div>
@@ -127,7 +129,7 @@ export const CTA = () => {
                     value={callForm.name}
                     onChange={(e) => setCallForm({ ...callForm, name: e.target.value })}
                     required
-                    className="w-full px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                    className="w-full px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-base touch-manipulation min-h-[44px]"
                     placeholder="John Smith"
                   />
                 </div>
@@ -138,7 +140,7 @@ export const CTA = () => {
                     value={callForm.firm}
                     onChange={(e) => setCallForm({ ...callForm, firm: e.target.value })}
                     required
-                    className="w-full px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                    className="w-full px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-base touch-manipulation min-h-[44px]"
                     placeholder="ABC Engineering"
                   />
                 </div>
@@ -149,7 +151,7 @@ export const CTA = () => {
                     value={callForm.role}
                     onChange={(e) => setCallForm({ ...callForm, role: e.target.value })}
                     required
-                    className="w-full px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                    className="w-full px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-base touch-manipulation min-h-[44px]"
                     placeholder="Project Manager"
                   />
                 </div>
@@ -161,7 +163,7 @@ export const CTA = () => {
                       value={callForm.email}
                       onChange={(e) => setCallForm({ ...callForm, email: e.target.value })}
                       required
-                      className="w-full px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                      className="w-full px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-base touch-manipulation min-h-[44px]"
                       placeholder="john@company.com"
                     />
                   </div>
@@ -171,7 +173,7 @@ export const CTA = () => {
                       type="tel"
                       value={callForm.phone}
                       onChange={(e) => setCallForm({ ...callForm, phone: e.target.value })}
-                      className="w-full px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                      className="w-full px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-base touch-manipulation min-h-[44px]"
                       placeholder="(555) 123-4567"
                     />
                   </div>
@@ -182,7 +184,7 @@ export const CTA = () => {
                     <PopoverTrigger asChild>
                       <button
                         type="button"
-                        className="w-full flex items-center justify-between px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-left"
+                        className="w-full flex items-center justify-between px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-left touch-manipulation min-h-[44px] text-base"
                       >
                         <span className={callForm.draftingSupport.length > 0 ? 'text-foreground' : 'text-muted-foreground'}>
                           {callForm.draftingSupport.length > 0 
@@ -251,7 +253,7 @@ export const CTA = () => {
                         value={callForm.otherService}
                         onChange={(e) => setCallForm({ ...callForm, otherService: e.target.value })}
                         required
-                        className="w-full px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                        className="w-full px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-base touch-manipulation min-h-[44px]"
                         placeholder="Enter the service you need..."
                       />
                     </div>
@@ -263,17 +265,17 @@ export const CTA = () => {
                     value={callForm.message}
                     onChange={(e) => setCallForm({ ...callForm, message: e.target.value })}
                     rows={4}
-                    className="w-full px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-none"
+                    className="w-full px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-none text-base touch-manipulation min-h-[120px]"
                     placeholder="Tell us about your project needs..."
                   />
                 </div>
                 <p className="text-sm text-muted-foreground italic">
                   Want to try us first? Ask for a free pilot redline update in your message.
                 </p>
-                <button type="submit" className="w-full group bg-secondary text-secondary-foreground hover:bg-secondary/90 px-6 py-3 rounded-[6px] font-semibold transition-all">
+                <button type="submit" className="w-full group bg-secondary text-secondary-foreground hover:bg-secondary/90 active:scale-95 px-6 py-3.5 sm:py-3 rounded-[6px] font-semibold transition-all touch-manipulation min-h-[48px] text-base">
                   <span className="flex items-center justify-center gap-2">
                     Schedule Call
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform flex-shrink-0" />
                   </span>
                 </button>
               </form>
@@ -287,7 +289,7 @@ export const CTA = () => {
                       value={redlineForm.name}
                       onChange={(e) => setRedlineForm({ ...redlineForm, name: e.target.value })}
                       required
-                      className="w-full px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                      className="w-full px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-base touch-manipulation min-h-[44px]"
                       placeholder="John Smith"
                     />
                   </div>
@@ -298,7 +300,7 @@ export const CTA = () => {
                       value={redlineForm.email}
                       onChange={(e) => setRedlineForm({ ...redlineForm, email: e.target.value })}
                       required
-                      className="w-full px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                      className="w-full px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-base touch-manipulation min-h-[44px]"
                       placeholder="john@company.com"
                     />
                   </div>
@@ -310,7 +312,7 @@ export const CTA = () => {
                     value={redlineForm.deadline}
                     onChange={(e) => setRedlineForm({ ...redlineForm, deadline: e.target.value })}
                     required
-                    className="w-full px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                    className="w-full px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-base touch-manipulation min-h-[44px]"
                     placeholder="e.g., Monday 9am EST"
                   />
                 </div>
@@ -321,14 +323,14 @@ export const CTA = () => {
                     onChange={(e) => setRedlineForm({ ...redlineForm, description: e.target.value })}
                     required
                     rows={4}
-                    className="w-full px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-none"
+                    className="w-full px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-none text-base touch-manipulation min-h-[120px]"
                     placeholder="Describe the redlines and attach files after submission..."
                   />
                 </div>
-                <button type="submit" className="w-full group bg-secondary text-secondary-foreground hover:bg-secondary/90 px-6 py-3 rounded-[6px] font-semibold transition-all">
+                <button type="submit" className="w-full group bg-secondary text-secondary-foreground hover:bg-secondary/90 active:scale-95 px-6 py-3.5 sm:py-3 rounded-[6px] font-semibold transition-all touch-manipulation min-h-[48px] text-base">
                   <span className="flex items-center justify-center gap-2">
                     Submit for Quote
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform flex-shrink-0" />
                   </span>
                 </button>
               </form>

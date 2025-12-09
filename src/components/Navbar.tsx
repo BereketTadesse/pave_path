@@ -167,14 +167,14 @@ export const Navbar = () => {
       }`}
     >
       <div className="section-container">
-        <div className="flex items-center justify-between h-22"> {/* 88px height */}
-          <a href="#" className="flex items-center gap-2" onClick={(e) => { e.preventDefault(); scrollToSection('#'); }}>
+        <div className="flex items-center justify-between h-16 sm:h-20 lg:h-22"> {/* Responsive height */}
+          <a href="#" className="flex items-center gap-1.5 sm:gap-2" onClick={(e) => { e.preventDefault(); scrollToSection('#'); }}>
             <img 
               src="/pave_logo.jpg" 
               alt="pavepathdesign" 
-              className="h-10 w-auto object-contain"
+              className="h-8 sm:h-9 lg:h-10 w-auto object-contain"
             />
-            <span className="font-display font-bold text-xl text-foreground dark:text-foreground">
+            <span className="font-display font-bold text-base sm:text-lg lg:text-xl text-foreground dark:text-foreground">
               pavepathdesign<span className="text-secondary dark:text-secondary">.</span>
             </span>
           </a>
@@ -219,7 +219,8 @@ export const Navbar = () => {
             <ThemeToggle />
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 text-foreground dark:text-foreground"
+              className="lg:hidden p-2.5 text-foreground dark:text-foreground touch-manipulation"
+              aria-label="Toggle menu"
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -252,22 +253,20 @@ export const Navbar = () => {
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ type: 'tween', duration: 0.3, ease: 'easeInOut' }}
-              className="fixed top-0 left-0 bg-primary dark:bg-[hsl(220_60%_25%)] border-r border-primary/20 shadow-2xl overflow-y-auto"
+              className="fixed top-0 left-0 bg-primary dark:bg-[hsl(220_60%_25%)] border-r border-primary/20 shadow-2xl overflow-y-auto w-full sm:w-[90%] md:w-[85%] lg:w-[400px] max-w-[400px]"
               style={{ 
                 height: '100vh',
-                width: '33%',
-                minWidth: '320px',
-                maxWidth: '400px',
                 position: 'fixed',
                 zIndex: 9999
               }}
             >
               {/* Menu Header */}
-              <div className="flex items-center justify-between p-6 border-b border-primary/20">
-                <h2 className="text-primary-foreground text-xl font-semibold">Menu</h2>
+              <div className="flex items-center justify-between p-4 sm:p-6 border-b border-primary/20">
+                <h2 className="text-primary-foreground text-lg sm:text-xl font-semibold">Menu</h2>
                 <button
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-primary-foreground hover:text-primary-foreground/80 transition-colors p-1"
+                  className="text-primary-foreground hover:text-primary-foreground/80 transition-colors p-2 touch-manipulation"
+                  aria-label="Close menu"
                 >
                   <X size={24} />
                 </button>
@@ -279,17 +278,17 @@ export const Navbar = () => {
                   <div key={item.href}>
                     {item.submenu ? (
                       <div>
-                        <button
-                          onClick={() => toggleSubmenu(item.label)}
-                          className="w-full text-left text-primary-foreground hover:bg-primary/80 transition-colors py-4 px-6 flex items-center justify-between border-b border-primary/20"
-                        >
-                          <span className="text-base">{item.label}</span>
-                          {openSubmenu === item.label ? (
-                            <ChevronUp size={18} className="text-primary-foreground" />
-                          ) : (
-                            <ChevronDown size={18} className="text-primary-foreground" />
-                          )}
-                        </button>
+                      <button
+                        onClick={() => toggleSubmenu(item.label)}
+                        className="w-full text-left text-primary-foreground hover:bg-primary/80 transition-colors py-4 px-4 sm:px-6 flex items-center justify-between border-b border-primary/20 touch-manipulation min-h-[48px]"
+                      >
+                        <span className="text-base sm:text-base">{item.label}</span>
+                        {openSubmenu === item.label ? (
+                          <ChevronUp size={18} className="text-primary-foreground flex-shrink-0" />
+                        ) : (
+                          <ChevronDown size={18} className="text-primary-foreground flex-shrink-0" />
+                        )}
+                      </button>
                         <AnimatePresence>
                           {openSubmenu === item.label && (
                             <motion.div
@@ -302,7 +301,7 @@ export const Navbar = () => {
                                 <button
                                   key={subItem.href}
                                   onClick={() => scrollToSection(subItem.href)}
-                                  className="w-full text-left text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary/50 transition-colors py-3 px-6 pl-12 text-sm border-b border-primary/20"
+                                  className="w-full text-left text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary/50 transition-colors py-3 px-4 sm:px-6 pl-8 sm:pl-12 text-sm border-b border-primary/20 touch-manipulation min-h-[44px]"
                                 >
                                   {subItem.label}
                                 </button>
@@ -314,9 +313,9 @@ export const Navbar = () => {
                     ) : (
                       <button
                         onClick={() => scrollToSection(item.href)}
-                        className="w-full text-left text-primary-foreground hover:bg-primary/80 transition-colors py-4 px-6 border-b border-primary/20"
+                        className="w-full text-left text-primary-foreground hover:bg-primary/80 transition-colors py-4 px-4 sm:px-6 border-b border-primary/20 touch-manipulation min-h-[48px]"
                       >
-                        <span className="text-base">{item.label}</span>
+                        <span className="text-base sm:text-base">{item.label}</span>
                       </button>
                     )}
                   </div>

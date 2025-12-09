@@ -5,8 +5,8 @@ export const Footer = () => {
 
   return (
     <footer className="border-t border-primary/20 dark:border-border/50 bg-white dark:bg-background text-foreground dark:text-foreground">
-      <div className="section-container py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
+      <div className="section-container py-10 sm:py-12 lg:py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-8">
           {/* Brand */}
           <div className="lg:col-span-1">
             <a href="#" className="flex items-center gap-2 mb-4">
@@ -86,7 +86,7 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-primary/20 dark:border-border/50 mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="border-t border-primary/20 dark:border-border/50 mt-8 sm:mt-10 lg:mt-12 pt-6 sm:pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-black dark:text-foreground/70">
             © {currentYear} pavepathdesign. All rights reserved.
           </p>

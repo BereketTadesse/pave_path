@@ -105,10 +105,10 @@ export const HowItWorks = () => {
           className="text-center mb-16"
         >
           <span className="text-primary font-medium text-sm uppercase tracking-wider">How We Work</span>
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold mt-4 mb-6 text-foreground">
+          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mt-4 mb-4 sm:mb-6 text-foreground">
             How PavePath Integrates With Your Team
           </h2>
-          <p className="text-muted-foreground text-lg max-w-3xl mx-auto leading-relaxed">
+          <p className="text-muted-foreground text-base sm:text-lg max-w-3xl mx-auto leading-relaxed">
             We designed PavePath to feel like an extension of your existing drafting department — not a separate outside vendor.
           </p>
         </motion.div>

@@ -129,30 +129,30 @@ export const EngagementModels = () => {
           className="mt-16"
         >
           <div className="text-center mb-12">
-            <h3 className="font-display text-2xl sm:text-3xl font-bold mb-4 text-foreground">
+            <h3 className="font-display text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4 text-foreground">
               Who We Support
             </h3>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto">
               We provide drafting services for:
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 lg:gap-8 max-w-7xl mx-auto">
             {engagementOptions.map((option, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.7 + index * 0.1 }}
-                className="glass-card-hover rounded-2xl p-6 lg:p-8 relative dark:border-border/70"
+                className="glass-card-hover rounded-xl sm:rounded-2xl p-5 sm:p-6 lg:p-8 relative dark:border-border/70"
               >
                 
-                <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${option.accent} flex items-center justify-center mb-6 border border-secondary/20`}>
-                  <option.icon className="w-7 h-7 text-secondary" strokeWidth={1.5} />
+                <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br ${option.accent} flex items-center justify-center mb-4 sm:mb-6 border border-secondary/20`}>
+                  <option.icon className="w-6 h-6 sm:w-7 sm:h-7 text-secondary" strokeWidth={1.5} />
                 </div>
                 
-                <h4 className="font-display text-xl font-semibold mb-3 text-foreground">{option.title}</h4>
-                <p className="text-muted-foreground leading-relaxed">{option.description}</p>
+                <h4 className="font-display text-lg sm:text-xl font-semibold mb-2 sm:mb-3 text-foreground">{option.title}</h4>
+                <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">{option.description}</p>
               </motion.div>
             ))}
           </div>

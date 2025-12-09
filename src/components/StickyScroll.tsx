@@ -55,39 +55,39 @@ const ScrollTextItem = ({ item, index, totalItems, scrollYProgress }: ScrollItem
 
   return (
     <motion.div
-      className="mb-20 lg:mb-40"
+      className="mb-12 sm:mb-16 lg:mb-40"
       style={{ opacity: textOpacity, y: textY }}
     >
-      <div className="flex items-center gap-4 mb-3">
+      <div className="flex items-center gap-3 sm:gap-4 mb-3">
         {item.number && (
-          <span className="font-display text-3xl md:text-4xl font-bold text-primary/20">
+          <span className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-primary/20">
             {item.number}
           </span>
         )}
         {Icon && (
-          <div className="w-14 h-14 rounded-xl bg-secondary/10 flex items-center justify-center border border-secondary/20">
-            <Icon className="w-7 h-7 text-secondary" strokeWidth={1.5} />
+          <div className="w-10 h-10 sm:w-12 sm:h-14 rounded-xl bg-secondary/10 flex items-center justify-center border border-secondary/20 flex-shrink-0">
+            <Icon className="w-5 h-5 sm:w-6 sm:h-7 text-secondary" strokeWidth={1.5} />
           </div>
         )}
-        <h2 className="font-display text-2xl md:text-3xl lg:text-4xl font-semibold text-foreground">
+        <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold text-foreground">
           {item.title}
         </h2>
       </div>
-      <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-4">
+      <p className="text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed mb-3 sm:mb-4">
         {item.description}
       </p>
       {item.features && item.features.length > 0 && (
-        <ul className="space-y-2 mb-4">
+        <ul className="space-y-1.5 sm:space-y-2 mb-3 sm:mb-4">
           {item.features.map((feature, idx) => (
-            <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
-              <span className="text-secondary mt-1.5 flex-shrink-0">●</span>
+            <li key={idx} className="flex items-start gap-2 text-xs sm:text-sm text-muted-foreground">
+              <span className="text-secondary mt-1 sm:mt-1.5 flex-shrink-0">●</span>
               <span>{feature}</span>
             </li>
           ))}
         </ul>
       )}
       {item.note && (
-        <p className="text-sm text-muted-foreground italic mt-4">
+        <p className="text-xs sm:text-sm text-muted-foreground italic mt-3 sm:mt-4">
           {item.note}
         </p>
       )}
@@ -144,9 +144,9 @@ export const StickyScroll = ({ content, contentClassName }: StickyScrollProps) =
 
   return (
     <div ref={ref} className="relative w-full">
-      <div className="grid lg:grid-cols-2 gap-10 px-4">
+      <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 px-0 sm:px-4">
         {/* Left side - Text content */}
-        <div className="lg:py-20">
+        <div className="py-8 sm:py-12 lg:py-20">
           {content.map((item, index) => (
             <ScrollTextItem
               key={item.title}
@@ -159,8 +159,8 @@ export const StickyScroll = ({ content, contentClassName }: StickyScrollProps) =
         </div>
 
         {/* Right side - Sticky content */}
-        <div className="lg:sticky lg:top-0 lg:h-screen lg:flex lg:items-center">
-          <div className={cn('w-full h-[400px] lg:h-[600px] rounded-lg relative', contentClassName)}>
+        <div className="lg:sticky lg:top-0 lg:h-screen lg:flex lg:items-center order-first lg:order-last">
+          <div className={cn('w-full h-[300px] sm:h-[400px] lg:h-[600px] rounded-lg relative', contentClassName)}>
             {content.map((item, index) => (
               <ScrollImageItem
                 key={`content-${index}`}
