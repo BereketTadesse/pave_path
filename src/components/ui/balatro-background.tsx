@@ -139,23 +139,12 @@ export default function BalatroBackground({
   useEffect(() => {
     if (!containerRef.current) return;
 
-    // Detect mobile device
-    const isMobile = window.innerWidth < 768 || 'ontouchstart' in window;
-    
-    // Reduce complexity on mobile
-    const optimizedSpinSpeed = isMobile ? spinSpeed * 0.5 : spinSpeed;
-    const optimizedPixelFilter = isMobile ? pixelFilter * 0.7 : pixelFilter;
-    const optimizedMouseInteraction = isMobile ? false : mouseInteraction;
-
     const container = containerRef.current;
     const renderer = new Renderer();
     const gl = renderer.gl;
     gl.clearColor(0, 0, 0, 1);
 
     let program: Program;
-    let lastTime = 0;
-    const targetFPS = isMobile ? 30 : 60; // Reduce FPS on mobile
-    const frameInterval = 1000 / targetFPS;
 
     function resize() {
       renderer.setSize(container.offsetWidth, container.offsetHeight);
@@ -163,7 +152,7 @@ export default function BalatroBackground({
         program.uniforms.iResolution.value = [gl.canvas.width, gl.canvas.height, gl.canvas.width / gl.canvas.height];
       }
     }
-    window.addEventListener('resize', resize, { passive: true });
+    window.addEventListener('resize', resize);
     resize();
 
     const geometry = new Triangle(gl);
@@ -176,7 +165,7 @@ export default function BalatroBackground({
           value: [gl.canvas.width, gl.canvas.height, gl.canvas.width / gl.canvas.height]
         },
         uSpinRotation: { value: spinRotation },
-        uSpinSpeed: { value: optimizedSpinSpeed },
+        uSpinSpeed: { value: spinSpeed },
         uOffset: { value: offset },
         uColor1: { value: hexToVec4(color1) },
         uColor2: { value: hexToVec4(color2) },
@@ -184,7 +173,7 @@ export default function BalatroBackground({
         uContrast: { value: contrast },
         uLighting: { value: lighting },
         uSpinAmount: { value: spinAmount },
-        uPixelFilter: { value: optimizedPixelFilter },
+        uPixelFilter: { value: pixelFilter },
         uSpinEase: { value: spinEase },
         uIsRotate: { value: isRotate },
         uMouse: { value: [0.5, 0.5] }
@@ -193,24 +182,9 @@ export default function BalatroBackground({
 
     const mesh = new Mesh(gl, { geometry, program });
     let animationFrameId: number;
-    let isVisible = true;
-
-    // Pause animation when tab is not visible (saves battery)
-    function handleVisibilityChange() {
-      isVisible = !document.hidden;
-    }
-    document.addEventListener('visibilitychange', handleVisibilityChange);
 
     function update(time: number) {
       animationFrameId = requestAnimationFrame(update);
-      
-      // Throttle frame rate on mobile
-      const elapsed = time - lastTime;
-      if (elapsed < frameInterval || !isVisible) {
-        return;
-      }
-      lastTime = time - (elapsed % frameInterval);
-      
       program.uniforms.iTime.value = time * 0.001;
       renderer.render({ scene: mesh });
     }
@@ -221,24 +195,19 @@ export default function BalatroBackground({
     }
 
     function handleMouseMove(e: MouseEvent) {
-      if (!optimizedMouseInteraction) return;
+      if (!mouseInteraction) return;
       const rect = container.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width;
       const y = 1.0 - (e.clientY - rect.top) / rect.height;
       program.uniforms.uMouse.value = [x, y];
     }
 
-    if (optimizedMouseInteraction) {
-      container.addEventListener('mousemove', handleMouseMove, { passive: true });
-    }
+    container.addEventListener('mousemove', handleMouseMove);
 
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', resize);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      if (optimizedMouseInteraction) {
-        container.removeEventListener('mousemove', handleMouseMove);
-      }
+      container.removeEventListener('mousemove', handleMouseMove);
       if (container.contains(gl.canvas)) {
         container.removeChild(gl.canvas);
       }
@@ -260,6 +229,6 @@ export default function BalatroBackground({
     mouseInteraction
   ]);
 
-  return <div ref={containerRef} className="balatro-container" style={{ willChange: 'transform', transform: 'translateZ(0)' }} />;
+  return <div ref={containerRef} className="balatro-container" />;
 }
 

@@ -45,31 +45,23 @@ export const Navbar = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
 
   useEffect(() => {
-    let ticking = false;
-    
     const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          setIsScrolled(window.scrollY > 50);
-          
-          const sections = navItems.map(item => item.href.substring(1));
-          for (const section of sections.reverse()) {
-            const element = document.getElementById(section);
-            if (element) {
-              const rect = element.getBoundingClientRect();
-              if (rect.top <= 100) {
-                setActiveSection(section);
-                break;
-              }
-            }
+      setIsScrolled(window.scrollY > 50);
+      
+      const sections = navItems.map(item => item.href.substring(1));
+      for (const section of sections.reverse()) {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 100) {
+            setActiveSection(section);
+            break;
           }
-          ticking = false;
-        });
-        ticking = true;
+        }
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -164,21 +156,15 @@ export const Navbar = () => {
   };
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-[99999] transition-all duration-300 bg-white dark:bg-background ${
+    <motion.nav
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5 }}
+      className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-300 bg-white dark:bg-background ${
         isScrolled 
           ? 'shadow-md' 
           : ''
       }`}
-      style={{ 
-        position: 'fixed', 
-        top: 0, 
-        left: 0, 
-        right: 0,
-        width: '100%',
-        zIndex: 99999,
-        transform: 'none'
-      }}
     >
       <div className="section-container">
         <div className="flex items-center justify-between h-16 sm:h-20 lg:h-22"> {/* Responsive height */}
@@ -339,6 +325,6 @@ export const Navbar = () => {
           </>
         )}
       </AnimatePresence>
-    </nav>
+    </motion.nav>
   );
 };

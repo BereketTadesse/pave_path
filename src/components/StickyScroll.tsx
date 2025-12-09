@@ -56,11 +56,7 @@ const ScrollTextItem = ({ item, index, totalItems, scrollYProgress }: ScrollItem
   return (
     <motion.div
       className="mb-12 sm:mb-16 lg:mb-40"
-      style={{ 
-        opacity: textOpacity, 
-        y: textY,
-        willChange: 'transform, opacity',
-      }}
+      style={{ opacity: textOpacity, y: textY }}
     >
       <div className="flex items-center gap-3 sm:gap-4 mb-3">
         {item.number && (
@@ -132,7 +128,6 @@ const ScrollImageItem = ({ item, index, totalItems, scrollYProgress }: ScrollIte
       style={{
         scale: imageScale,
         opacity: imageOpacity,
-        willChange: 'transform, opacity',
       }}
     >
       {item.content}
@@ -145,7 +140,6 @@ export const StickyScroll = ({ content, contentClassName }: StickyScrollProps) =
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start start', 'end end'],
-    layoutEffect: false, // Use regular effect for better performance
   });
 
   return (

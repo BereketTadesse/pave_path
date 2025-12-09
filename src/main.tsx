@@ -4,17 +4,14 @@ import "./index.css";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-// Initialize AOS (Animate On Scroll) - Optimized for mobile
-const isMobile = window.innerWidth < 768;
+// Initialize AOS (Animate On Scroll)
 AOS.init({
-  duration: isMobile ? 600 : 800,         // Shorter duration on mobile
-  easing: 'ease-out',                      // Better performance than ease-in-out
-  once: true,                              // Animate only once for better performance
-  offset: isMobile ? 50 : 100,            // Smaller offset on mobile
-  delay: 0,
-  mirror: false,                           // Disable mirror for better performance
-  disable: isMobile ? 'mobile' : false,     // Disable on mobile if needed
-  throttleDelay: 50,                       // Throttle scroll events
+  duration: 800,         // Animation duration in milliseconds
+  easing: 'ease-in-out', // Easing function
+  once: false,           // Whether animation should happen only once - while scrolling down
+  offset: 100,           // Offset (in px) from the original trigger point
+  delay: 0,              // global delay
+  mirror: true,          // Whether elements should animate out while scrolling past them
 });
 
 createRoot(document.getElementById("root")!).render(<App />);

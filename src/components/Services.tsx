@@ -96,8 +96,7 @@ export const Services = () => {
   // Scroll progress tracking for the slider animation (works on all devices)
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ['start start', 'end end'],
-    layoutEffect: false, // Use regular effect for better performance
+    offset: ['start start', 'end end']
   });
 
   const scrollToSection = (href: string) => {
@@ -272,12 +271,10 @@ export const Services = () => {
               <div
                 key={service.id}
                 className="h-screen flex items-center justify-center sticky top-0"
-                style={{ willChange: 'transform' }}
               >
                 <motion.div
                   style={{ 
                     scale: scale,
-                    willChange: 'transform',
                   }}
                   initial={{ opacity: 0, y: 50 }}
                   animate={{
