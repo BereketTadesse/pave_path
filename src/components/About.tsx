@@ -69,7 +69,7 @@ export const About = () => {
                   transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
                   className="glass-card rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center dark:border-border/70"
                 >
-                  <div className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold gradient-text mb-1 sm:mb-2">
+                  <div className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-secondary mb-1 sm:mb-2">
                     {stat.value}
                   </div>
                   <div className="text-xs sm:text-sm text-muted-foreground">{stat.label}</div>
