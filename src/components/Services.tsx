@@ -1,5 +1,5 @@
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
-import { useRef, useState, useEffect } from 'react';
+import { useRef } from 'react';
 import { PenTool, Accessibility, Car, Droplets, ClipboardList, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 const services = [
@@ -92,18 +92,8 @@ export const Services = () => {
   const sectionRef = useRef(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const isSectionInView = useInView(sectionRef, { once: true, margin: '-100px' });
-  const [isDesktop, setIsDesktop] = useState(false);
 
-  useEffect(() => {
-    const checkDesktop = () => {
-      setIsDesktop(window.innerWidth >= 1024);
-    };
-    checkDesktop();
-    window.addEventListener('resize', checkDesktop);
-    return () => window.removeEventListener('resize', checkDesktop);
-  }, []);
-
-  // Scroll progress tracking for the slider animation
+  // Scroll progress tracking for the slider animation (works on all devices)
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end']
@@ -150,10 +140,6 @@ export const Services = () => {
     visible: {
       opacity: 1,
       y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-      },
     },
   };
 
@@ -232,6 +218,7 @@ export const Services = () => {
           variants={headerVariants}
           initial="hidden"
           animate={isSectionInView ? "visible" : "hidden"}
+          transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
           className="text-center mb-16"
         >
           <motion.span 
@@ -275,7 +262,7 @@ export const Services = () => {
           {services.map((service, index) => {
             const isEven = index % 2 === 0;
             
-            // Calculate scale for each card - cards scale down as you scroll (disabled on mobile)
+            // Calculate scale for each card - cards scale down as you scroll (works on all devices)
             const targetScale = 1 - ((services.length - index) * 0.05);
             const range: [number, number] = [index * 0.2, 1];
             const scale = useTransform(scrollYProgress, range, [1, targetScale]);
@@ -283,11 +270,21 @@ export const Services = () => {
             return (
               <div
                 key={service.id}
-                className="h-auto lg:h-screen flex items-center justify-center lg:sticky lg:top-0 py-8 lg:py-0"
+                className="h-screen flex items-center justify-center sticky top-0"
               >
                 <motion.div
                   style={{ 
-                    scale: isDesktop ? scale : 1,
+                    scale: scale,
+                  }}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  transition={{
+                    duration: 0.6,
+                    delay: index * 0.1,
+                    ease: [0.25, 0.1, 0.25, 1],
                   }}
                   className="glass-card-hover relative overflow-hidden rounded-xl sm:rounded-2xl w-full max-w-7xl mx-auto group min-h-[400px] sm:min-h-[500px] lg:min-h-[600px] flex flex-col dark:border-border/70"
                 >
@@ -305,109 +302,267 @@ export const Services = () => {
                     <div className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-6 sm:gap-8 lg:gap-12 items-start`}>
                       {/* Left/Right: Icon & Badge Section */}
                       <div className={`flex-shrink-0 ${isEven ? 'lg:order-1' : 'lg:order-2'}`}>
-                        <div className="space-y-6">
+                        <motion.div 
+                          className="space-y-6"
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          animate={{
+                            opacity: 1,
+                            scale: 1,
+                          }}
+                          transition={{
+                            duration: 0.5,
+                            delay: index * 0.1 + 0.2,
+                          }}
+                        >
                           {/* Badge */}
-                          <div className="inline-flex items-center">
+                          <motion.div 
+                            className="inline-flex items-center"
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{
+                              opacity: 1,
+                              x: 0,
+                            }}
+                            transition={{
+                              duration: 0.4,
+                              delay: index * 0.1 + 0.3,
+                            }}
+                          >
                             <span className="text-xs font-bold uppercase tracking-wider text-primary bg-primary/10 px-4 py-2 rounded-full border border-primary/20">
                               {service.badge}
                             </span>
-                          </div>
+                          </motion.div>
                           
                           {/* Icon */}
-                          <div className={`
-                            relative w-16 h-16 lg:w-20 lg:h-20 rounded-xl
-                            bg-gradient-to-br ${service.iconGradient}
-                            flex items-center justify-center
-                            shadow-lg group-hover:scale-110 group-hover:rotate-3
-                            transition-all duration-500
-                          `}>
+                          <motion.div 
+                            className={`
+                              relative w-16 h-16 lg:w-20 lg:h-20 rounded-xl
+                              bg-gradient-to-br ${service.iconGradient}
+                              flex items-center justify-center
+                              shadow-lg group-hover:scale-110 group-hover:rotate-3
+                              transition-all duration-500
+                            `}
+                            initial={{ opacity: 0, scale: 0, rotate: -180 }}
+                            animate={{
+                              opacity: 1,
+                              scale: 1,
+                              rotate: 0,
+                            }}
+                            transition={{
+                              duration: 0.6,
+                              delay: index * 0.1 + 0.4,
+                              type: "spring",
+                              stiffness: 200,
+                              damping: 15,
+                            }}
+                          >
                             <service.icon className="w-8 h-8 lg:w-10 lg:h-10 text-secondary" strokeWidth={1.5} />
                             <div className="absolute inset-0 bg-secondary/20 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                          </div>
-                        </div>
+                          </motion.div>
+                        </motion.div>
                       </div>
 
                       {/* Right/Left: Content Section */}
-                      <div className={`flex-1 flex flex-col ${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
+                      <motion.div 
+                        className={`flex-1 flex flex-col ${isEven ? 'lg:order-2' : 'lg:order-1'}`}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{
+                          opacity: 1,
+                          x: 0,
+                        }}
+                        transition={{
+                          duration: 0.5,
+                          delay: index * 0.1 + 0.2,
+                        }}
+                      >
                         {/* Title */}
-                        <h3 className="font-display text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-foreground mb-3 sm:mb-4 group-hover:text-secondary transition-colors duration-300">
+                        <motion.h3 
+                          className="font-display text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-foreground mb-3 sm:mb-4 group-hover:text-secondary transition-colors duration-300"
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{
+                            opacity: 1,
+                            y: 0,
+                          }}
+                          transition={{
+                            duration: 0.5,
+                            delay: index * 0.1 + 0.3,
+                          }}
+                        >
                           {service.title}
-                        </h3>
+                        </motion.h3>
                         
                         {/* Description */}
-                        <p className="text-muted-foreground text-sm sm:text-base lg:text-lg leading-relaxed mb-4 sm:mb-6">
+                        <motion.p 
+                          className="text-muted-foreground text-sm sm:text-base lg:text-lg leading-relaxed mb-4 sm:mb-6"
+                          initial={{ opacity: 0 }}
+                          animate={{
+                            opacity: 1,
+                          }}
+                          transition={{
+                            duration: 0.5,
+                            delay: index * 0.1 + 0.4,
+                          }}
+                        >
                           {service.description}
-                        </p>
+                        </motion.p>
 
                         {/* Bullet Points - Special layout for services with two sections */}
                         {service.hasTwoSections ? (
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
+                          <motion.div 
+                            className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6"
+                            initial={{ opacity: 0 }}
+                            animate={{
+                              opacity: 1,
+                            }}
+                            transition={{
+                              duration: 0.5,
+                              delay: index * 0.1 + 0.5,
+                            }}
+                          >
                             {/* First Section */}
-                            <div className="p-3 sm:p-4 rounded-lg bg-primary/5 dark:bg-primary/10 border border-primary/10 dark:border-primary/20">
+                            <motion.div 
+                              className="p-3 sm:p-4 rounded-lg bg-primary/5 dark:bg-primary/10 border border-primary/10 dark:border-primary/20"
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{
+                                opacity: 1,
+                                x: 0,
+                              }}
+                              transition={{
+                                duration: 0.4,
+                                delay: index * 0.1 + 0.6,
+                              }}
+                            >
                               <p className="text-xs sm:text-sm font-semibold text-foreground mb-2 sm:mb-3">
                                 We draft MUTCD-compliant traffic control plans for:
                               </p>
                               <ul className="space-y-1.5 sm:space-y-2">
                                 {service.bullets.map((bullet, bulletIndex) => (
-                                  <li
+                                  <motion.li
                                     key={bulletIndex}
                                     className="flex items-start gap-2 text-xs sm:text-sm lg:text-base text-foreground"
+                                    initial={{ opacity: 0, x: -10 }}
+                                    animate={{
+                                      opacity: 1,
+                                      x: 0,
+                                    }}
+                                    transition={{
+                                      duration: 0.3,
+                                      delay: index * 0.1 + 0.7 + bulletIndex * 0.05,
+                                    }}
                                   >
                                     <span className="text-secondary mt-1 sm:mt-1.5 flex-shrink-0">●</span>
                                     <span className="leading-relaxed">{bullet}</span>
-                                  </li>
+                                  </motion.li>
                                 ))}
                               </ul>
-                            </div>
+                            </motion.div>
 
                             {/* Second Section */}
-                            <div className="p-3 sm:p-4 rounded-lg bg-accent/5 dark:bg-accent/10 border border-accent/10 dark:border-accent/20">
+                            <motion.div 
+                              className="p-3 sm:p-4 rounded-lg bg-accent/5 dark:bg-accent/10 border border-accent/10 dark:border-accent/20"
+                              initial={{ opacity: 0, x: 20 }}
+                              animate={{
+                                opacity: 1,
+                                x: 0,
+                              }}
+                              transition={{
+                                duration: 0.4,
+                                delay: index * 0.1 + 0.6,
+                              }}
+                            >
                               <p className="text-xs sm:text-sm font-semibold text-foreground mb-2 sm:mb-3">
                                 {service.secondSectionTitle}
                               </p>
                               <ul className="space-y-1.5 sm:space-y-2">
                                 {service.secondSectionBullets?.map((bullet, bulletIndex) => (
-                                  <li
+                                  <motion.li
                                     key={bulletIndex}
                                     className="flex items-start gap-2 text-xs sm:text-sm lg:text-base text-foreground"
+                                    initial={{ opacity: 0, x: 10 }}
+                                    animate={{
+                                      opacity: 1,
+                                      x: 0,
+                                    }}
+                                    transition={{
+                                      duration: 0.3,
+                                      delay: index * 0.1 + 0.7 + bulletIndex * 0.05,
+                                    }}
                                   >
                                     <span className="text-secondary mt-1 sm:mt-1.5 flex-shrink-0">●</span>
                                     <span className="leading-relaxed">{bullet}</span>
-                                  </li>
+                                  </motion.li>
                                 ))}
                               </ul>
-                            </div>
-                          </div>
+                            </motion.div>
+                          </motion.div>
                         ) : (
-                          <ul className="space-y-1.5 sm:space-y-2 mb-4 sm:mb-6">
+                          <motion.ul 
+                            className="space-y-1.5 sm:space-y-2 mb-4 sm:mb-6"
+                            initial={{ opacity: 0 }}
+                            animate={{
+                              opacity: 1,
+                            }}
+                            transition={{
+                              duration: 0.5,
+                              delay: index * 0.1 + 0.5,
+                            }}
+                          >
                             {service.bullets.map((bullet, bulletIndex) => (
-                              <li
+                              <motion.li
                                 key={bulletIndex}
                                 className="flex items-start gap-2 text-xs sm:text-sm lg:text-base text-foreground"
+                                initial={{ opacity: 0, x: -15 }}
+                                animate={{
+                                  opacity: 1,
+                                  x: 0,
+                                }}
+                                transition={{
+                                  duration: 0.3,
+                                  delay: index * 0.1 + 0.6 + bulletIndex * 0.08,
+                                }}
                               >
                                 <span className="text-secondary mt-1 sm:mt-1.5 flex-shrink-0">●</span>
                                 <span className="leading-relaxed">{bullet}</span>
-                              </li>
+                              </motion.li>
                             ))}
-                          </ul>
+                          </motion.ul>
                         )}
 
                         {/* Best For Section */}
-                        <div className="mt-auto mb-4 sm:mb-6 p-3 sm:p-4 rounded-lg bg-primary/5 dark:bg-primary/10 border border-primary/10 dark:border-primary/20">
+                        <motion.div 
+                          className="mt-auto mb-4 sm:mb-6 p-3 sm:p-4 rounded-lg bg-primary/5 dark:bg-primary/10 border border-primary/10 dark:border-primary/20"
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{
+                            opacity: 1,
+                            y: 0,
+                          }}
+                          transition={{
+                            duration: 0.4,
+                            delay: index * 0.1 + 0.8,
+                          }}
+                        >
                           <p className="text-xs sm:text-sm text-foreground leading-relaxed">
                             {service.bestFor}
                           </p>
-                        </div>
+                        </motion.div>
 
                         {/* CTA Button */}
-                        <button
+                        <motion.button
                           onClick={() => scrollToSection('#contact')}
                           className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-primary hover:text-secondary transition-colors group/link w-fit touch-manipulation min-h-[44px] py-2"
+                          initial={{ opacity: 0, scale: 0.9 }}
+                          animate={{
+                            opacity: 1,
+                            scale: 1,
+                          }}
+                          transition={{
+                            duration: 0.4,
+                            delay: index * 0.1 + 0.9,
+                          }}
                         >
                           <span>Learn more</span>
                           <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover/link:translate-x-1 transition-transform flex-shrink-0" />
-                        </button>
-                      </div>
+                        </motion.button>
+                      </motion.div>
                     </div>
                   </div>
                 </motion.div>
