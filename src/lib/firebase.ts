@@ -3,7 +3,9 @@ import { getFirestore } from 'firebase/firestore';
 import { getAnalytics, isSupported } from 'firebase/analytics';
 
 // Firebase configuration
-// Using environment variables if available, otherwise fallback to direct config
+// IMPORTANT: Use environment variables for security
+// Create a .env file in the root directory with your Firebase config
+// The .env file is gitignored and won't be pushed to GitHub
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyAnVLDLL8TGjaKQ5nQtpMpRfWphFeiwTKo",
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "pavepath-design-efd5b.firebaseapp.com",
@@ -13,6 +15,10 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:483676537326:web:f1d3eac92ca5d8a01e8eff",
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || "G-RSEYH2HN7C"
 };
+
+// Note: Firebase API keys are public by design and safe to expose in client-side code
+// However, security is enforced through Firestore security rules
+// Using environment variables is still recommended for better configuration management
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

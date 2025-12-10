@@ -64,6 +64,7 @@ export const CTA = () => {
       toast({
         title: "Request Submitted!",
         description: "We'll be in touch within 24 hours to schedule your call.",
+        variant: "success",
       });
       setCallForm({ name: '', firm: '', role: '', email: '', phone: '', draftingSupport: [], otherService: '', message: '' });
     } catch (error) {
@@ -91,6 +92,7 @@ export const CTA = () => {
       toast({
         title: "Redline Task Received!",
         description: "Our team will review and send you a quote within 2 hours.",
+        variant: "success",
       });
       setRedlineForm({ name: '', email: '', deadline: '', description: '' });
     } catch (error) {
