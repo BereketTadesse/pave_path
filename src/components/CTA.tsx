@@ -4,6 +4,8 @@ import { Send, Phone, ArrowRight, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
+import { saveCallRequest, saveRedlineRequest } from '@/lib/contactService';
+import { trackEvent } from '@/hooks/useAnalytics';
 
 export const CTA = () => {
   const ref = useRef(null);
@@ -23,6 +25,7 @@ export const CTA = () => {
     message: '' 
   });
   const [redlineForm, setRedlineForm] = useState({ name: '', email: '', deadline: '', description: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const draftingSupportOptions = [
     'Redlines',
@@ -47,22 +50,59 @@ export const CTA = () => {
     setPopoverOpen(false);
   };
 
-  const handleCallSubmit = (e: React.FormEvent) => {
+  const handleCallSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Request Submitted!",
-      description: "We'll be in touch within 24 hours to schedule your call.",
-    });
-    setCallForm({ name: '', firm: '', role: '', email: '', phone: '', draftingSupport: [], otherService: '', message: '' });
+    setIsSubmitting(true);
+    
+    try {
+      await saveCallRequest(callForm);
+      // Track form submission in Analytics
+      trackEvent('form_submission', {
+        form_type: 'call_request',
+        drafting_support_count: callForm.draftingSupport.length,
+      });
+      toast({
+        title: "Request Submitted!",
+        description: "We'll be in touch within 24 hours to schedule your call.",
+      });
+      setCallForm({ name: '', firm: '', role: '', email: '', phone: '', draftingSupport: [], otherService: '', message: '' });
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast({
+        title: "Submission Failed",
+        description: "There was an error submitting your request. Please try again or contact us directly.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const handleRedlineSubmit = (e: React.FormEvent) => {
+  const handleRedlineSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Redline Task Received!",
-      description: "Our team will review and send you a quote within 2 hours.",
-    });
-    setRedlineForm({ name: '', email: '', deadline: '', description: '' });
+    setIsSubmitting(true);
+    
+    try {
+      await saveRedlineRequest(redlineForm);
+      // Track form submission in Analytics
+      trackEvent('form_submission', {
+        form_type: 'redline_request',
+      });
+      toast({
+        title: "Redline Task Received!",
+        description: "Our team will review and send you a quote within 2 hours.",
+      });
+      setRedlineForm({ name: '', email: '', deadline: '', description: '' });
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast({
+        title: "Submission Failed",
+        description: "There was an error submitting your request. Please try again or contact us directly.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -286,10 +326,14 @@ export const CTA = () => {
                 <p className="text-sm text-muted-foreground italic">
                   Want to try us first? Ask for a free pilot redline update in your message.
                 </p>
-                <button type="submit" className="w-full group bg-primary text-primary-foreground hover:bg-primary/90 active:scale-95 px-6 py-3.5 sm:py-3 rounded-[6px] font-semibold transition-all touch-manipulation min-h-[48px] text-base">
+                <button 
+                  type="submit" 
+                  disabled={isSubmitting}
+                  className="w-full group bg-primary text-primary-foreground hover:bg-primary/90 active:scale-95 px-6 py-3.5 sm:py-3 rounded-[6px] font-semibold transition-all touch-manipulation min-h-[48px] text-base disabled:opacity-50 disabled:cursor-not-allowed"
+                >
                   <span className="flex items-center justify-center gap-2">
-                    Schedule Call
-                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform flex-shrink-0" />
+                    {isSubmitting ? 'Submitting...' : 'Schedule Call'}
+                    {!isSubmitting && <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform flex-shrink-0" />}
                   </span>
                 </button>
               </form>
@@ -341,10 +385,14 @@ export const CTA = () => {
                     placeholder="Describe the redlines and attach files after submission..."
                   />
                 </div>
-                <button type="submit" className="w-full group bg-primary text-primary-foreground hover:bg-primary/90 active:scale-95 px-6 py-3.5 sm:py-3 rounded-[6px] font-semibold transition-all touch-manipulation min-h-[48px] text-base">
+                <button 
+                  type="submit" 
+                  disabled={isSubmitting}
+                  className="w-full group bg-primary text-primary-foreground hover:bg-primary/90 active:scale-95 px-6 py-3.5 sm:py-3 rounded-[6px] font-semibold transition-all touch-manipulation min-h-[48px] text-base disabled:opacity-50 disabled:cursor-not-allowed"
+                >
                   <span className="flex items-center justify-center gap-2">
-                    Submit for Quote
-                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform flex-shrink-0" />
+                    {isSubmitting ? 'Submitting...' : 'Submit for Quote'}
+                    {!isSubmitting && <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform flex-shrink-0" />}
                   </span>
                 </button>
               </form>
